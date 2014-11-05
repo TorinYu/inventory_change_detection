@@ -1,3 +1,19 @@
+Problems:
+1. Slight changes in position of the same inventory
+2. Small differences in lighting
+3. A light difference in viewpoint
+
+In computer vision, we ignore these distractions by makeing a new kind of 
+image that captures important things like edges, which is more reliable for
+detecting changes.
+
+Descriptors of imgae:
+HoG(Histogram of Gradients)
+SIFT
+SURF
+
+
+
 There are generally two directions to tackle this task. 
 
 The main strategy is image comparison in an unsupervised or semi-supervised fashion. 
