@@ -1,0 +1,32 @@
+Problems:
+1. Slight changes in position of the same inventory
+2. Small differences in lighting
+3. A light difference in viewpoint
+
+In computer vision, we ignore these distractions by makeing a new kind of 
+image that captures important things like edges, which is more reliable for
+detecting changes.
+
+Descriptors of imgae:
+HoG(Histogram of Gradients)
+SIFT
+SURF
+
+
+
+There are generally two directions to tackle this task. 
+
+The main strategy is image comparison in an unsupervised or semi-supervised fashion. 
+First, we could extract image features (e.g. SIFT) from both images and build a classifier based 
+on how many (ratio) keypoints in Image A have matching scores below the threshold. 
+
+Another interesting idea is to modify the concept of optical flow [1]. 
+The assumption is that for those objects which are absent in image B, we can not recover a proper displacement 
+or the displacement contrasts with that of all the other objects (so you probably need to apply segmentation
+[2] to separate different 'items'). Thus you can have a classifier using displacement measurement.
+
+Moreover, it can be useful to apply some kind of smoothing (e.g. Gaussian) on the grey scale channel or RGB 
+channels for SET 2. But I don't have an exact solution at the moment.
+
+[1] http://www.seas.upenn.edu/~katef/LDOF.html
+[2] http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html
