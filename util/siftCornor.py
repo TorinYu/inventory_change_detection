@@ -2,15 +2,32 @@ import cv2
 import sys
 import os
 import numpy as np
-import distribution
+#import distribution
 import test
 
 THREASHOLD = 0.1695
 
-ratios = []
+#ratios = []
 
-scores, bins = distribution.calc_score_table(
-    test.ratios_changed, test.ratios_unchanged)
+#scores, bins = distribution.calc_score_table(
+#    test.ratios_changed, test.ratios_unchanged)
+
+def detectCornor(image):
+    img = cv2.imread(image)
+    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+    corners = cv2.goodFeaturesToTrack(gray,1000,0.1,10)
+    corners = np.int0(corners)
+    
+    return corners
+    #for i in corners:
+     #   x,y = i.ravel()
+      #  cv2.circle(img,(x,y),3,255,-1)
+        #cv2.imwrite(sys.argv[2], img)
+        #cv2.imshow("image",img)
+    #plt.imshow(img),plt.show()
+
+
 
 def preprocess(image):
     mv = cv2.split(image)
@@ -32,10 +49,12 @@ def sift(img1, img2, k):
 
     sift = cv2.SIFT()
 
-    
-
-    kp1, des1 = sift.detectAndCompute(img1_gray, None)
-    kp2, des2 = sift.detectAndCompute(img2_gray, None)
+    cornor1 = detectCornor(img1)
+    cornor2 = detectCornor(img2)
+    kp1, des1 = sift.compute(img1_gray, cornor1)
+    kp2, des2 = sift.compute(img1_gray, cornor2)
+    #kp1, des1 = sift.detectAndCompute(img1_gray, None)
+    #kp2, des2 = sift.detectAndCompute(img2_gray, None)
 
     bf = cv2.BFMatcher()
     matches = bf.knnMatch(des1, des2, k=2)
@@ -52,7 +71,7 @@ def sift(img1, img2, k):
 
 def main(argv):
     ratio = sift(cv2.imread(argv[1]), cv2.imread(argv[2]), 0.5)
-    print distribution.get_score(ratio, scores, bins)
+    #print distribution.get_score(ratio, scores, bins)
 
 def test_k(argv):
     for f in os.listdir(argv[1]):
@@ -65,6 +84,10 @@ def test_k(argv):
                 k = 0.1 + i*0.05
                 ratio = sift(cv2.imread(file1), cv2.imread(file2), k)
                 print k, ratio
+
+def testCornor():
+    ratio = sift(cv2.imread(sys.argv[1]), cv2.imread(sys.argv[2]), 0.75)
+    print ratio
 
 def test(argv):
     i = 0
@@ -82,4 +105,4 @@ def test(argv):
 if __name__ == "__main__":
     main(sys.argv)
     #test(sys.argv)
-    # test_k(sys.argv)
+    test_k(sys.argv)

@@ -4,7 +4,7 @@ import numpy as np
 # from matplotlib import pyplot as plt
 
 # Return an edge image
-def detect_edges(image, minVal=100, maxVal=200):
+def detect_edges(image, minVal=200, maxVal=300):
 	return cv2.Canny(image, minVal, maxVal)
 
 
