@@ -80,6 +80,6 @@ def test(argv):
     print 'std: ', np.std(ratios)
 
 if __name__ == "__main__":
-    main(sys.argv)
+    #main(sys.argv)
     #test(sys.argv)
-    # test_k(sys.argv)
+    test_k(sys.argv)

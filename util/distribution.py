@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from test import ratios_unchanged, ratios_changed
+from ratiosTest import ratios_unchanged, ratios_changed, changed_075, unchanged_075, changed_09, unchanged_09
 
 num_bins = 10
 
@@ -59,3 +59,5 @@ if __name__ == "__main__":
     print get_score(0.31, scores, bins)
     print get_score(0.41, scores, bins)
     plot(ratios_changed, ratios_unchanged, bins, "plot.png")
+    plot(changed_075, unchanged_075, bins, "plot075.png")
+    plot(changed_09, unchanged_09, bins, "plot090.png")
